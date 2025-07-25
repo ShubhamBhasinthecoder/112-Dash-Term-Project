@@ -14,7 +14,7 @@ def onAppStart(app):
     app.groundHeight = 100
     app.gameState = 'start'
     
-    #Player with animation states
+    
     app.player = {
         'x': 100,
         'y': app.height - app.groundHeight - 30,
@@ -27,10 +27,10 @@ def onAppStart(app):
         'rotation': 0,
         'trail': [],
         'invulnerable': 0,
-        'skin': 0  #Different player skins
+        'skin': 0  
     }
     
-    #Physics
+    
     app.gravity = 1.0
     app.jumpStrength = -16
     app.playerSpeed = 4
@@ -39,7 +39,7 @@ def onAppStart(app):
     app.timer = 0
     app.gameTime = 0
     
-    #Game elements
+    
     app.blocks = []
     app.coins = []
     app.powerUps = []
@@ -49,7 +49,7 @@ def onAppStart(app):
     app.cameraOffset = 0
     app.cameraShake = 0
     
-    #Visual effects
+    
     app.backgroundOffset = 0
     app.starField = []
     for _ in range(50):
@@ -60,7 +60,7 @@ def onAppStart(app):
             'speed': random.uniform(0.5, 2)
         })
     
-    #Power-up system
+    
     app.activePowerUps = {
         'invincible': 0,
         'doubleJump': 0,
@@ -68,71 +68,71 @@ def onAppStart(app):
         'magnetCoins': 0
     }
     
-    #Game modes
-    app.gameMode = 'normal'  # normal, hardcore, practice
+    
+    app.gameMode = 'normal'  
     app.difficulty = 1
     app.achievements = []
     app.bestScore = 0
 
-    #Visual
+    
     app.visualEffects = []
     
-    #Jump physics
+    
     app.maxJumpHeight = abs(app.jumpStrength * app.jumpStrength) / (2 * app.gravity)
     app.maxJumpDistance = (2 * abs(app.jumpStrength) / app.gravity) * (app.playerSpeed + app.autoScrollSpeed)
 
 def onStep(app):
     if app.gameState != 'playing':
-        app.timer += 1  #For animations in menus
+        app.timer += 1  
         return
     
     app.timer += 1
     app.gameTime += 1
     app.score = app.timer // 10
     
-    #Update background elements
+    
     updateBackground(app)
     
-    #Player animations
+    
     updatePlayerAnimation(app)
     
-    #Automatic horizontal movement
+    
     updatePlayerMovement(app)
     
-    #Rapid jumping when holding jump key
+    
     handleJumping(app)
     
-    #Physics
+    
     updatePhysics(app)
     
-    #Camera
+    
     updateCamera(app)
     
-    #Ground collision
+    
     handleGroundCollision(app)
     
-    #Block collisions
+    
     handleBlockCollisions(app)
     
-    #Coin collection with magnet effect
+    
     handleCoinCollection(app)
     
-    #Power-up collection
+    
     handlePowerUpCollection(app)
     
-    #Particle system adjustments
+    
     updateParticles(app)
     updatePowerUps(app)
     
-    #visual effects
+    
     updateVisualEffects(app)
     
-    #Death conditions
+    
     if app.player['y'] > app.height:
         app.gameState = 'gameOver'
         addVisualEffect(app, 'death', app.player['x'], app.player['y'])
     
-    #Win condition
+    
     if app.player['x'] >= app.levelLength:
         app.gameState = 'win'
         if app.score > app.bestScore:
@@ -191,7 +191,7 @@ def startGame(app):
     app.particles = []
     app.visualEffects = []
     
-    #Reset power-ups
+    
     for key in app.activePowerUps:
         app.activePowerUps[key] = 0
     
@@ -206,11 +206,11 @@ def redrawAll(app):
     drawPlayer(app)
     drawVisualEffects(app)
     
-    #UI
+    
     if app.gameState == 'playing':
         drawEnhancedUI(app)
     
-    #Game state screens
+    
     if app.gameState == 'start':
         drawStartScreen(app)
     elif app.gameState == 'gameOver':
