@@ -138,3 +138,83 @@ def onStep(app):
         if app.score > app.bestScore:
             app.bestScore = app.score
         addVisualEffect(app, 'victory', app.player['x'], app.player['y'])
+
+def onKeyPress(app, key):
+    if app.gameState == 'start':
+        if key == 'space':
+            startGame(app)
+        elif key == '1':
+            app.gameMode = 'normal'
+        elif key == '2':
+            app.gameMode = 'hardcore'
+            app.difficulty = 2
+        elif key == '3':
+            app.gameMode = 'practice'
+        elif key == 's':
+            app.player['skin'] = (app.player['skin'] + 1) % 3
+    elif app.gameState == 'playing':
+        if (key == 'space' or key == 'w' or key == 'up') and canJump(app):
+            performJump(app)
+    elif app.gameState in ('gameOver', 'win'):
+        if key == 'r':
+            startGame(app)
+
+def onKeyRelease(app, key):
+    if key == 'space' or key == 'w' or key == 'up':
+        app.player['jumpHeld'] = False
+
+def onMousePress(app, x, y):
+    if app.gameState == 'start':
+        startGame(app)
+    elif app.gameState == 'playing':
+        if canJump(app):
+            performJump(app)
+    elif app.gameState in ('gameOver', 'win'):
+        startGame(app)
+
+def startGame(app):
+    app.gameState = 'playing'
+    app.timer = 0
+    app.gameTime = 0
+    app.score = 0
+    app.coinsCollected = 0
+    app.player['x'] = 100
+    app.player['y'] = app.height - app.groundHeight - app.player['height']
+    app.player['vy'] = 0
+    app.player['onGround'] = True
+    app.player['jumpHeld'] = False
+    app.player['rotation'] = 0
+    app.player['trail'] = []
+    app.player['invulnerable'] = 0
+    app.cameraOffset = 0
+    app.cameraShake = 0
+    app.particles = []
+    app.visualEffects = []
+    
+    #Reset power-ups
+    for key in app.activePowerUps:
+        app.activePowerUps[key] = 0
+    
+    app.blocks, app.coins, app.powerUps = createRandomLevel(app)
+
+def redrawAll(app):
+    drawBackground(app)
+    drawBlocks(app)
+    drawCoins(app)
+    drawPowerUps(app)
+    drawParticles(app)
+    drawPlayer(app)
+    drawVisualEffects(app)
+    
+    #UI
+    if app.gameState == 'playing':
+        drawEnhancedUI(app)
+    
+    #Game state screens
+    if app.gameState == 'start':
+        drawStartScreen(app)
+    elif app.gameState == 'gameOver':
+        drawGameOverScreen(app)
+    elif app.gameState == 'win':
+        drawWinScreen(app)
+runApp()
