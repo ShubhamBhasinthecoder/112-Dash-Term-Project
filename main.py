@@ -80,3 +80,61 @@ def onAppStart(app):
     #Jump physics
     app.maxJumpHeight = abs(app.jumpStrength * app.jumpStrength) / (2 * app.gravity)
     app.maxJumpDistance = (2 * abs(app.jumpStrength) / app.gravity) * (app.playerSpeed + app.autoScrollSpeed)
+
+def onStep(app):
+    if app.gameState != 'playing':
+        app.timer += 1  #For animations in menus
+        return
+    
+    app.timer += 1
+    app.gameTime += 1
+    app.score = app.timer // 10
+    
+    #Update background elements
+    updateBackground(app)
+    
+    #Player animations
+    updatePlayerAnimation(app)
+    
+    #Automatic horizontal movement
+    updatePlayerMovement(app)
+    
+    #Rapid jumping when holding jump key
+    handleJumping(app)
+    
+    #Physics
+    updatePhysics(app)
+    
+    #Camera
+    updateCamera(app)
+    
+    #Ground collision
+    handleGroundCollision(app)
+    
+    #Block collisions
+    handleBlockCollisions(app)
+    
+    #Coin collection with magnet effect
+    handleCoinCollection(app)
+    
+    #Power-up collection
+    handlePowerUpCollection(app)
+    
+    #Particle system adjustments
+    updateParticles(app)
+    updatePowerUps(app)
+    
+    #visual effects
+    updateVisualEffects(app)
+    
+    #Death conditions
+    if app.player['y'] > app.height:
+        app.gameState = 'gameOver'
+        addVisualEffect(app, 'death', app.player['x'], app.player['y'])
+    
+    #Win condition
+    if app.player['x'] >= app.levelLength:
+        app.gameState = 'win'
+        if app.score > app.bestScore:
+            app.bestScore = app.score
+        addVisualEffect(app, 'victory', app.player['x'], app.player['y'])
