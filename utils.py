@@ -28,7 +28,6 @@ def isJumpPossible(startX, startY, endX, endY, app):
     distance = endX - startX
     heightDiff = startY - endY
     
-    #More lenient jump requirements
     if distance > app.maxJumpDistance * 1.2:
         return False
     if heightDiff > app.maxJumpHeight * 0.9:
