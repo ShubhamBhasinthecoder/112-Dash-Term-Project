@@ -161,3 +161,83 @@ def drawStartScreen(app):
     if app.bestScore > 0:
         drawLabel(f'Best Score: {app.bestScore}', app.width/2, 50, 
                  size=18, fill='gold', bold=True)
+
+def drawGameOverScreen(app):
+    
+    drawRect(0, 0, app.width, app.height, fill='darkRed')
+    
+    
+    for i in range(20):
+        x = random.randint(0, app.width)
+        y = random.randint(0, app.height)
+        size = random.randint(10, 30)
+        drawPolygon(x, y, x+size, y+size//2, x+size//2, y+size, 
+                   fill='red', border='darkRed')
+    
+    
+    drawRect(app.width/2 - 200, app.height/2 - 80, 400, 160, 
+            fill='white', border='red', borderWidth=5)
+    drawRect(app.width/2 - 195, app.height/2 - 75, 390, 10, fill='pink')
+    
+    
+    drawLabel('GAME OVER!', app.width/2, app.height/2 - 40, 
+             size=28, fill='red', bold=True)
+    
+    
+    drawLabel(f'Final Score: {app.score}', app.width/2, app.height/2 - 10, 
+             size=16, fill='black', bold=True)
+    drawLabel(f'Coins Collected: {app.coinsCollected}', app.width/2, app.height/2 + 10, 
+             size=16, fill='gold', bold=True)
+    drawLabel(f'Distance Traveled: {int(app.player["x"])}m', app.width/2, app.height/2 + 30, 
+             size=14, fill='blue')
+    
+    
+    drawRect(app.width/2 - 100, app.height/2 + 50, 200, 30, 
+            fill='orange', border='red', borderWidth=3)
+    drawLabel('Press R to Restart', app.width/2, app.height/2 + 65, 
+             size=14, fill='white', bold=True)
+
+def drawWinScreen(app):
+    
+    drawRect(0, 0, app.width, app.height, fill='darkGreen')
+    
+    
+    for i in range(15):
+        x = (app.timer * 3 + i * 50) % app.width
+        y = 50 + (app.timer + i * 30) % 200
+        size = 5 + math.sin(app.timer * 0.2 + i) * 3
+        colors = ['yellow', 'orange', 'red', 'purple', 'blue']
+        drawStar(x, y, size, 6, fill=colors[i % len(colors)])
+    
+    
+    drawRect(app.width/2 - 220, app.height/2 - 90, 440, 180, 
+            fill='white', border='green', borderWidth=5)
+    drawRect(app.width/2 - 215, app.height/2 - 85, 430, 12, fill='lightGreen')
+    
+    
+    drawLabel('VICTORY!', app.width/2, app.height/2 - 50, 
+             size=32, fill='green', bold=True)
+    
+    
+    drawLabel(f'Final Score: {app.score}', app.width/2, app.height/2 - 15, 
+             size=18, fill='black', bold=True)
+    drawLabel(f'Coins Collected: {app.coinsCollected}', app.width/2, app.height/2 + 5, 
+             size=18, fill='gold', bold=True)
+    drawLabel(f'Completion Time: {app.gameTime//60}s', app.width/2, app.height/2 + 25, 
+             size=16, fill='blue')
+    
+    
+    if app.coinsCollected > 20:
+        rating = 'PERFECT!'
+    elif app.coinsCollected > 10:
+        rating = 'GREAT!'
+    else:
+        rating = 'GOOD!'
+    drawLabel(f'Rating: {rating}', app.width/2, app.height/2 + 45, 
+             size=16, fill='purple', bold=True)
+    
+    
+    drawRect(app.width/2 - 120, app.height/2 + 65, 240, 30, 
+            fill='lime', border='green', borderWidth=3)
+    drawLabel('Press R for New Challenge!', app.width/2, app.height/2 + 80, 
+             size=14, fill='darkGreen', bold=True)
