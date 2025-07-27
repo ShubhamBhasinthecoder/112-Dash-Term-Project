@@ -124,7 +124,7 @@ def drawStartScreen(app):
             fill='white', border='black', borderWidth=4)
     
     
-    drawLabel('ENHANCED 112 DASH', app.width/2, menuY + 30, 
+    drawLabel('112 DASH', app.width/2, menuY + 30, 
              size=24, fill='blue', bold=True)
     
     
