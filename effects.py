@@ -43,18 +43,16 @@ def addParticle(app, x, y, color, particleType='explosion'):
             })
 
 def updateParticles(app):
-    #Update particle system
     for particle in app.particles[:]:
         particle['x'] += particle['vx']
         particle['y'] += particle['vy']
-        particle['vy'] += 0.3  #gravity on particles
+        particle['vy'] += 0.3  
         particle['life'] -= 1
         
         if particle['life'] <= 0:
             app.particles.remove(particle)
 
 def drawParticles(app):
-    #Enhanced particle system
     for particle in app.particles:
         x = particle['x'] - app.cameraOffset
         if -20 < x < app.width + 20:
@@ -69,7 +67,6 @@ def drawParticles(app):
                 drawCircle(x, particle['y'], max(1, size), fill=particle['color'])
 
 def updatePowerUps(app):
-    #Update active power-ups
     for powerUp in app.activePowerUps:
         if app.activePowerUps[powerUp] > 0:
             app.activePowerUps[powerUp] -= 1
