@@ -20,11 +20,8 @@ class VisualEffect:
     
     def draw(self, cameraOffset, screenWidth):
         screenX = self.x - cameraOffset
-        
-        
         if -50 < screenX < screenWidth + 50:
             alpha = self.life / self.maxLife
-            
             if self.type == 'jump':
                 size = 20 * alpha
                 drawCircle(screenX, self.y, size, fill='white', border='gray', borderWidth=2)
@@ -37,3 +34,35 @@ class VisualEffect:
                 drawLabel('✨', screenX, self.y, size=int(25 * alpha), fill='cyan')
             elif self.type == 'victory':
                 drawLabel('🎉', screenX, self.y, size=int(30 * alpha), fill='gold')
+
+class VisualEffectManager:
+    def __init__(self):
+        self.effects = []
+    
+    def addEffect(self, effectType, x, y):
+        effect = VisualEffect(effectType, x, y)
+        self.effects.append(effect)
+    
+    def update(self):
+        for effect in self.effects:
+            effect.update()
+        
+        self.effects = [effect for effect in self.effects if not effect.isExpired()]
+    
+    def draw(self, cameraOffset, screenWidth):
+        for effect in self.effects:
+            effect.draw(cameraOffset, screenWidth)
+
+
+def addVisualEffect(app, effectType, x, y):
+    if not hasattr(app, 'effectManager'):
+        app.effectManager = VisualEffectManager()
+    app.effectManager.addEffect(effectType, x, y)
+
+def updateVisualEffects(app):
+    if hasattr(app, 'effectManager'):
+        app.effectManager.update()
+
+def drawVisualEffects(app):
+    if hasattr(app, 'effectManager'):
+        app.effectManager.draw(app.cameraOffset, app.width)
