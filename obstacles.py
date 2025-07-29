@@ -103,3 +103,45 @@ def drawBlocks(app):
                     drawLine(x, y + i, x + w, y + i, fill='darkGray')
                 for i in range(0, w, 8):
                     drawLine(x + i, y, x + i, y + h, fill='darkGray')
+
+def drawCoins(app):
+    for coin in app.coins:
+        if not coin['collected']:
+            x = coin['x'] - app.cameraOffset
+            if -30 < x < app.width + 30:
+                y = coin['y']
+                rotation = coin.get('animFrame', 0) * 5
+                scale = 8 + math.sin(rotation * 0.1) * 2
+                for i in range(4):
+                    sparkleX = x + 7 + math.cos(rotation * 0.05 + i * 90) * 15
+                    sparkleY = y + 7 + math.sin(rotation * 0.05 + i * 90) * 15
+                    drawCircle(sparkleX, sparkleY, 2, fill='yellow')
+                drawStar(x + 7, y + 7, scale + 4, 5, fill='lightYellow')
+                drawStar(x + 7, y + 7, scale, 5, fill='gold', border='orange', borderWidth=2)
+                drawStar(x + 7, y + 7, scale - 3, 5, fill='yellow')
+                drawLabel('10', x + 7, y + 7, size=8, fill='darkOrange', bold=True)
+def drawPowerUps(app):
+    for powerUp in app.powerUps:
+        if not powerUp['collected']:
+            x = powerUp['x'] - app.cameraOffset
+            if -30 < x < app.width + 30:
+                y = powerUp['y']
+                colors = {
+                    'invincible': ('cyan', 'blue'),
+                    'doubleJump': ('lime', 'green'),
+                    'slowTime': ('purple', 'indigo'),
+                    'magnetCoins': ('gold', 'orange')
+                }
+                mainColor, borderColor = colors.get(powerUp['type'], ('white', 'black'))
+                pulse = 2 + math.sin(powerUp.get('animFrame', 0) * 0.2) * 1
+                drawRect(x - pulse, y - pulse, 20 + pulse*2, 20 + pulse*2, 
+                        fill=mainColor, border=borderColor, borderWidth=2)
+                drawRect(x + 2, y + 2, 16, 16, fill=borderColor)
+                if powerUp['type'] == 'invincible':
+                    drawLabel('⚡', x + 10, y + 10, size=12, fill='white')
+                elif powerUp['type'] == 'doubleJump':
+                    drawLabel('↑↑', x + 10, y + 10, size=10, fill='white')
+                elif powerUp['type'] == 'slowTime':
+                    drawLabel('⏰', x + 10, y + 10, size=12, fill='white')
+                elif powerUp['type'] == 'magnetCoins':
+                    drawLabel('🧲', x + 10, y + 10, size=12, fill='white')
