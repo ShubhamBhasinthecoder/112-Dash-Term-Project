@@ -16,7 +16,6 @@ def updateBackground(app):
 def drawBackground(app):
     
     for i in range(app.height):
-        
         blueShade = 135 + int(math.sin(app.timer * 0.01 + i * 0.01) * 20)
         drawLine(0, i, app.width, i, fill=rgb(max(0, blueShade - 50), 
                 max(0, 206 + int(math.sin(app.timer * 0.02) * 30)), 
@@ -42,7 +41,6 @@ def drawBackground(app):
              8, fill='limeGreen')
 
 def drawEnhancedUI(app):
-    
     drawRect(10, 10, 140, 45, fill='black', border='white', borderWidth=2)
     drawLabel(f'Score: {app.score}', 80, 25, size=14, fill='white', bold=True)
     drawLabel(f'Best: {app.bestScore}', 80, 40, size=12, fill='yellow')
@@ -84,7 +82,6 @@ def drawEnhancedUI(app):
     
     drawRect(barX, 10, progressBarWidth, 20, fill='black', border='white', borderWidth=2)
     
-    
     if progress < 0.3:
         progressColor = 'red'
     elif progress < 0.7:
@@ -104,10 +101,7 @@ def drawEnhancedUI(app):
              size=12, fill='white', bold=True)
 
 def drawStartScreen(app):
-    
     drawRect(0, 0, app.width, app.height, fill='darkBlue')
-    
-    
     for i in range(10):
         x = (app.timer * 2 + i * 80) % (app.width + 100) - 50
         y = 100 + i * 40 + math.sin(app.timer * 0.05 + i) * 30
@@ -126,7 +120,9 @@ def drawStartScreen(app):
     
     drawLabel('112 DASH', app.width/2, menuY + 30, 
              size=24, fill='blue', bold=True)
-    
+
+    drawLabel('Made by Shubham Bhasin :)', app.width/2, menuY + 50, 
+         size=12, fill='darkBlue', bold=True)
     
     drawLabel('Select Game Mode:', app.width/2, menuY + 70, size=16, fill='black', bold=True)
     
@@ -163,10 +159,7 @@ def drawStartScreen(app):
                  size=18, fill='gold', bold=True)
 
 def drawGameOverScreen(app):
-    
     drawRect(0, 0, app.width, app.height, fill='darkRed')
-    
-    
     for i in range(20):
         x = random.randint(0, app.width)
         y = random.randint(0, app.height)
@@ -198,9 +191,7 @@ def drawGameOverScreen(app):
              size=14, fill='white', bold=True)
 
 def drawWinScreen(app):
-    
     drawRect(0, 0, app.width, app.height, fill='darkGreen')
-    
     
     for i in range(15):
         x = (app.timer * 3 + i * 50) % app.width
