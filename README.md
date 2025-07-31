@@ -17,5 +17,16 @@ I watched some of it to get an idea on how to use the time library and generate.
 
 This game is a recreation of Geometry Dash by RobTop Games.
 
+3. My Highschool education for physics came to be handy in this project.
+
+
+4. ChatGPT was used just to search the web easily for the particle generation system, but I stopped doing it because of the bad search results from ChatGPT, and resorted to simple google search results. My prompt was - "find me a video teaching how to generate particles randomly for the sky or any screen for a geometry dash styled game"
+
+Run the main.py file for the game to start :)
+
+Thank you!
+
+
+
 
 
