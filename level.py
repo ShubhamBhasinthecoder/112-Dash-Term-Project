@@ -9,7 +9,7 @@ def updateCamera(app):
         shake = random.randint(-app.cameraShake, app.cameraShake)
         app.cameraShake -= 1
     app.cameraOffset = max(0, app.player['x'] - 200) + shake
-
+#Random Level generation math for the randomisation of level blocks and obstacles.
 def createRandomLevel(app):
     blocks = []
     coins = []
